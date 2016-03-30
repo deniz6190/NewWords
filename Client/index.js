@@ -1,5 +1,17 @@
 var myApp = angular.module('myApp', []) //links js and html together
 
+myApp.service('GifService', function ($http) {
+	var baseUrl= "https://api.giphy.com/v1/gifs/"
+	var apiKey = "dc6zaTOxFJmzC"
+
+	this.getGifs=function(query) {
+		var url= baseUrl + "search?q=" + query + "&api_key=" + apiKey
+		return $http.get(url)
+
+	}
+
+})
+
 myApp.service('HistoryService', function($http){
 	var BaseUrl= "http://localhost:8080/"
 
@@ -15,9 +27,10 @@ myApp.service('HistoryService', function($http){
 
 })// creates a memory service to recall previously submitted words. $http because interfaces with the internet not with the host
 
-myApp.controller('MyController', function ($scope, HistoryService) {
+myApp.controller('MyController', function ($scope, HistoryService, GifService) {
 	$scope.newWord ='cat'
 	$scope.word= []
+	$scope.gifUrl = ''
 	$scope.saveThisWord= function(){
 		HistoryService.saveWord( $scope.newWord )//returns a 'promise'; a future value to be filled
 		.then(saveSuccess, error)
@@ -28,15 +41,29 @@ myApp.controller('MyController', function ($scope, HistoryService) {
 		.then(loadSuccess, error)
 	}
 
+	$scope.showGifs = function($event) {
+		GifService.getGifs ($event.currentTarget.innerHTML)
+		.then(gifSuccess, error)
+	}
+
+	function gifSuccess(json){
+		if (json.data.data[0]){
+			$scope.gifUrl = json.data.data[0].images.fixed_height.url
+		} else {
+			$scope.gifUrl= "http://goo.gl/tioFyj"
+		}
+		
+	}
+
 	function saveSuccess(json){
 		console.log(json)
 	}
 
-	function error(json){
-		console.log(err)
-	}
-
 	function loadSuccess(json){
 		$scope.words=json.data
+	}
+
+		function error(json){
+		console.log(err)
 	}
 }) //scope defines the array of data the html file has access to
