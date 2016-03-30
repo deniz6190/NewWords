@@ -1,0 +1,16 @@
+<html ng-app="myApp">
+<Head>
+<meta name="viewport" content="width=device-width, intial-scale=1">
+<link rel="stylesheet" Type="text/css" href="style.css"><!--links the css to the html-->
+</Head>
+	<body ng-controller="MyController">
+		<h1>Learn new Words</h1>
+
+		<div>
+			<input ng-model="newWord"></input>
+		</div>
+
+		<script src="node_modules/angular/angular.js"></script><!--Loads the predefined angular.js file from Google which allows our index.js to use all the features -->
+		<script src="index.js"></script> <!--links the javascript file to the html. Put at the end so that it loads faster adn the nodes needed are created-->
+	</body>
+</html>

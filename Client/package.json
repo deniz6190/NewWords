@@ -7,5 +7,8 @@
   },
   "author": "Deniz",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "angular": "^1.5.3"
+  }
 }
