@@ -23,8 +23,8 @@ myApp.controller('MyController', function ($scope, HistoryService) {
 		.then(saveSuccess, error)
 	}//hooks up the button to the index.html meaning it takes the input properly.
 
-	$scope.function getSavedWords(){
-		HistoryService.getsaved()
+	$scope.getSavedWords = function(){
+		HistoryService.getSaved()
 		.then(loadSuccess, error)
 	}
 
